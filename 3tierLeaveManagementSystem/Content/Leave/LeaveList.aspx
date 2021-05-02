@@ -32,9 +32,9 @@
     <div class="image">
         <asp:Image ID="Image" runat="server" class="img-circle elevation-2" alt="User Image" />
     </div>
-    <div class="info">
-        <a href="#" class="d-block">Hii,
-        <asp:Label ID="lblDisplayname" runat="server"></asp:Label></a>
+    <div class="info" style="color: white">
+        Hii,
+        <asp:Label ID="lblDisplayname" runat="server"></asp:Label>
     </div>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="cphBreadcrumbsTitle" runat="Server">
@@ -44,10 +44,74 @@
     Leave
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="cphPageContent" runat="Server">
-    <div class="container mb-5">
+    <div class="container">
+        <div class="row mt-3">
+
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="far fa-address-book"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Casual Leave</span>
+                        <span class="info-box-number">
+                            <asp:Label ID="lblCasualLeave" runat="server" EnableViewState="False"></asp:Label>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="fas fa-notes-medical"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Medical Leave</span>
+                        <span class="info-box-number">
+                            <asp:Label ID="lblMedicalLeave" runat="server" EnableViewState="False"></asp:Label>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="far fa-thumbs-down"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">LOP</span>
+                        <span class="info-box-number">
+                            <asp:Label ID="lblLOP" runat="server" EnableViewState="False"></asp:Label>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+            <!-- /.col -->
+            <div class="col-md-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="fas fa-info-circle"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Other Leave</span>
+                        <span class="info-box-number">
+                            <asp:Label ID="lblOtherLeave" runat="server" EnableViewState="False"></asp:Label>
+                        </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+    </div>
+    <div class="container mb-5 mt-4">
         <div class="row">
             <div class="col-md-12 text-right" style="padding-bottom: 1.5em">
-                <asp:Button ID="btnAddLeave" CssClass="btn bg-gradient-primary" runat="server" Text="Add Leave" OnClick="btnAddLeave_Click" />
+                <asp:Button ID="btnAddLeave" CssClass="btn btn-lg bg-gradient-primary" runat="server" Text="Add Leave" OnClick="btnAddLeave_Click" />
             </div>
         </div>
         <asp:Panel ID="PanelErrorMesseage" runat="server" Visible="false">

@@ -53,6 +53,23 @@ namespace LeaveManagementSystem.ENT
         }
         #endregion LeaveTypeID
 
+
+        #region TotalDays
+        protected SqlInt32 _TotalDays;
+
+        public SqlInt32 TotalDays
+        {
+            get
+            {
+                return _TotalDays;
+            }
+            set
+            {
+                _TotalDays = value;
+            }
+        }
+        #endregion TotalDays
+
         #region LeaveReason
         protected SqlString _LeaveReason;
 

@@ -58,6 +58,25 @@ namespace LeaveManagementSystem.BAL
         #endregion Insert Operation
 
         #region Update Operation
+
+        #region UpdateTotalDaysByLeaveType Operation
+        public Boolean UpdateTotalDaysByLeaveType(LeaveTypeENT entLeaveType)
+        {
+            LeaveTypeDAL dalLeaveType = new LeaveTypeDAL();
+
+            if (dalLeaveType.UpdateTotalDaysByLeaveType(entLeaveType))
+            {
+                return true;
+            }
+            else
+            {
+                Message = dalLeaveType.Message;
+                return false;
+            }
+        }
+        #endregion UpdateTotalDaysByLeaveType Operation
+
+        #region Update Operation
         public Boolean Update(LeaveTypeENT entLeaveType)
         {
             LeaveTypeDAL dalLeaveType = new LeaveTypeDAL();
@@ -74,7 +93,28 @@ namespace LeaveManagementSystem.BAL
         }
         #endregion Update Operation
 
+        #endregion Update Operation
+
         #region Delete Operation
+
+        #region DeleteAllByUserID Operation
+        public Boolean DeleteAllByUserID(SqlInt32 UserID)
+        {
+            LeaveTypeDAL dalLeaveType = new LeaveTypeDAL();
+
+            if (dalLeaveType.DeleteAllByUserID(UserID))
+            {
+                return true;
+            }
+            else
+            {
+                Message = dalLeaveType.Message;
+                return false;
+            }
+        }
+        #endregion DeleteAllByUserID Operation
+
+        #region DeleteByPK Operation
         public Boolean Delete(SqlInt32 LeaveTypeID)
         {
             LeaveTypeDAL dalLeaveType = new LeaveTypeDAL();
@@ -89,6 +129,8 @@ namespace LeaveManagementSystem.BAL
                 return false;
             }
         }
+        #endregion DeleteByPK Operation
+
         #endregion Delete Operation
 
         #region Select Operation
@@ -103,11 +145,21 @@ namespace LeaveManagementSystem.BAL
 
         #endregion SelectAll Operation
 
-        #region SelectForDropDownList Operation
-        public DataTable SelectForDropDownList()
+        #region SelectByUserID Operation
+
+        public DataTable SelectByUserID(SqlInt32 UserID)
         {
             LeaveTypeDAL dalLeaveType = new LeaveTypeDAL();
-            return dalLeaveType.SelectForDropDownList();
+            return dalLeaveType.SelectByUserID(UserID);
+        }
+
+        #endregion SelectAll Operation
+
+        #region SelectForDropDownList Operation
+        public DataTable SelectForDropDownListByUserID(SqlInt32 UserID)
+        {
+            LeaveTypeDAL dalLeaveType = new LeaveTypeDAL();
+            return dalLeaveType.SelectForDropDownListByUserID(UserID);
         }
         #endregion SelectForDropDownList Operation
 

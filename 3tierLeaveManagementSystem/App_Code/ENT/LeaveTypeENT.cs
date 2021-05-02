@@ -49,6 +49,22 @@ public class LeaveTypeENT
         }
     }
     #endregion LeaveType
+    
+    #region TotalDays
+    protected SqlInt32 _TotalDays;
+
+    public SqlInt32 TotalDays
+    {
+        get
+        {
+            return _TotalDays;
+        }
+        set
+        {
+            _TotalDays = value;
+        }
+    }
+    #endregion TotalDays
 
     #region UserID
     protected SqlInt32 _UserID;

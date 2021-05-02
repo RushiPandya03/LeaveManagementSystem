@@ -64,7 +64,6 @@
             </div>
 
             <!-- /.col -->
-
             <div class="col-md-6 col-sm-6 col-12">
                 <asp:HyperLink ID="hlEmployeeDetails" runat="server" NavigateUrl='~/Content/User/EmployeeDetails.aspx'>
                     <div class="info-box">
@@ -78,13 +77,12 @@
                         <!-- /.info-box-content -->
                     </div>
                     <!-- /.info-box -->
-
                 </asp:HyperLink>
             </div>
-
             <!-- /.col -->
         </div>
     </div>
+
     <div class="container mt-4 mb-5">
         <asp:Panel ID="PanelErrorMesseage" runat="server" Visible="false">
             <div class="row">

@@ -125,7 +125,7 @@
                                 Email<span class="text-danger">*</span>
                             </div>
                             <div class="col-md-4">
-                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" TextMode="Email"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="rfvEmail" runat="server"
                                     ControlToValidate="txtEmail"
                                     ErrorMessage="Enter Email"

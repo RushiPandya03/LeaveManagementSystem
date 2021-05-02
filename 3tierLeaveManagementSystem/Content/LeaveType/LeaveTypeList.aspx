@@ -27,6 +27,8 @@
                 <asp:GridView ID="gvLeaveType" CssClass="table table-bordered table-striped"  runat="server" AutoGenerateColumns="False" OnRowCommand="gvLeaveType_RowCommand">
                     <Columns>
                         <asp:BoundField HeaderText="Leave Type" DataField="LeaveType" ItemStyle-Width="250px"/>
+                        <asp:BoundField HeaderText="Total Days" DataField="TotalDays" ItemStyle-Width="250px"/>
+                        <asp:BoundField HeaderText="Username" DataField="Username" ItemStyle-Width="250px"/>
                         <asp:TemplateField HeaderText="Functions" ItemStyle-Width="100px">
                             <ItemTemplate>
                                 <asp:Button ID="btnDelete" runat="server" Text="Delete" CssClass="btn btn-sm bg-gradient-danger rounded-pill" CommandName="DeleteRecord" CommandArgument=' <%# Eval("LeaveTypeID") %> '/>
@@ -42,7 +44,7 @@
         $(document).ready(function () {
             $('#<%= gvLeaveType.ClientID %>').prepend($("<thead></thead>").append($(this).find("tr:first"))).DataTable(
                 {
-                    columnDefs: [{ orderable: false, targets: [1] }],
+                    columnDefs: [{ orderable: false, targets: [3] }],
                 });
         });
     </script>

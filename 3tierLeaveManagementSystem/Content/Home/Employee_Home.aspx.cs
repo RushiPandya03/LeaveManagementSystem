@@ -111,14 +111,23 @@ public partial class Content_Home_Home_Before_Login : System.Web.UI.Page
         UserBAL balUser = new UserBAL();
         LeaveBAL balLeave = new LeaveBAL();
         LeaveStatusBAL balLeaveStatus = new LeaveStatusBAL();
-
-        if(!balLeaveStatus.DeleteAll(Convert.ToInt32(Session["UserID"].ToString().Trim())));
+        LeaveTypeBAL balLeaveType = new LeaveTypeBAL();
+        
+        if (!balLeaveStatus.DeleteAll(Convert.ToInt32(Session["UserID"].ToString().Trim())))
         {
             PanelErrorMesseage.Visible = true;
             lblErrorMessage.Text = balLeaveStatus.Message;
         }
             
-        if (!balLeave.DeleteAll(Convert.ToInt32(Session["UserID"].ToString().Trim())));
+        if (balLeave.DeleteAll(Convert.ToInt32(Session["UserID"].ToString().Trim())))
+        {
+            if (!balLeaveType.DeleteAllByUserID(Convert.ToInt32(Session["UserID"].ToString().Trim())))
+            {
+                PanelErrorMesseage.Visible = true;
+                lblErrorMessage.Text = balLeaveType.Message;
+            }
+        }
+        else
         {
             PanelErrorMesseage.Visible = true;
             lblErrorMessage.Text = balLeave.Message;

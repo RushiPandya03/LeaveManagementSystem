@@ -62,6 +62,9 @@ public partial class Content_LeaveType_LeaveTypeAddEdit : System.Web.UI.Page
         if (txtLeaveType.Text.Trim() != "")
             entLeaveType.LeaveType = txtLeaveType.Text.Trim();
 
+        if (txtTotalDays.Text.Trim() != "")
+            entLeaveType.TotalDays = Convert.ToInt32(txtTotalDays.Text.Trim());
+
         #endregion Collect Data
 
         LeaveTypeBAL balLeaveType = new LeaveTypeBAL();
@@ -102,19 +105,23 @@ public partial class Content_LeaveType_LeaveTypeAddEdit : System.Web.UI.Page
     private void clearSelection()
     {
         txtLeaveType.Text = "";
+        txtTotalDays.Text = "";
     }
     #endregion ClearSelection
 
     #region FillControls
     private void fillControls(SqlInt32 LeaveTypeID)
     {
-        LeaveTypeBAL balDepartment = new LeaveTypeBAL();
-        LeaveTypeENT entDepartment = new LeaveTypeENT();
+        LeaveTypeBAL balLeaveType = new LeaveTypeBAL();
+        LeaveTypeENT entLeaveType = new LeaveTypeENT();
 
-        entDepartment = balDepartment.SelectByPK(LeaveTypeID);
+        entLeaveType = balLeaveType.SelectByPK(LeaveTypeID);
 
-        if (!entDepartment.LeaveType.IsNull)
-            txtLeaveType.Text = entDepartment.LeaveType.Value.ToString();
+        if (!entLeaveType.LeaveType.IsNull)
+            txtLeaveType.Text = entLeaveType.LeaveType.Value.ToString();
+
+        if (!entLeaveType.TotalDays.IsNull)
+            txtTotalDays.Text = entLeaveType.TotalDays.Value.ToString();
     }
     #endregion FillControls
 

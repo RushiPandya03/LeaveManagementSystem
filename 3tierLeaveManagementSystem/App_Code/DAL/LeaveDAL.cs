@@ -428,7 +428,7 @@ namespace LeaveManagementSystem.DAL
             }
         }
         #endregion SelectByPK
-
+        
         #region SelectLeaveStatusByPK
         public LeaveENT SelectLeaveStatusByPK(SqlInt32 LeaveID)
         {
@@ -441,7 +441,7 @@ namespace LeaveManagementSystem.DAL
                     {
                         #region Prepare Command
                         objCmd.CommandType = CommandType.StoredProcedure;
-                        objCmd.CommandText = "PR_Leave_SelectLeaveStatusByPK";
+                        objCmd.CommandText = "PR_Leave_SelectLeaveStatusLeaveTypeIDByPK";
                         objCmd.Parameters.Add("@LeaveID", SqlDbType.Int).Value = LeaveID;
                         #endregion Prepare Command
 
@@ -456,6 +456,9 @@ namespace LeaveManagementSystem.DAL
 
                                 if (!objSDR["LeaveStatus"].Equals(DBNull.Value))
                                     entLeave.LeaveStatus = Convert.ToString(objSDR["LeaveStatus"]);
+
+                                if (!objSDR["LeaveTypeID"].Equals(DBNull.Value))
+                                    entLeave.LeaveTypeID = Convert.ToInt32(objSDR["LeaveTypeID"]);
                             }
                         }
                         return entLeave;
@@ -481,6 +484,57 @@ namespace LeaveManagementSystem.DAL
             }
         }
         #endregion SelectLeaveStatusByPK
+
+        #region SelectTotalDaysByLeaveTypeIDUserID
+        public LeaveENT SelectTotalDaysByLeaveTypeIDUserID(SqlInt32 LeaveTypeID, SqlInt32 UserID)
+        {
+            using (SqlConnection objConn = new SqlConnection(ConnectionString))
+            {
+                objConn.Open();
+                using (SqlCommand objCmd = objConn.CreateCommand())
+                {
+                    try
+                    {
+                        #region Prepare Command
+                        objCmd.CommandType = CommandType.StoredProcedure;
+                        objCmd.CommandText = "PR_Leave_SelectLeaveTotalDaysByLeaveTypeIDUserID";
+                        objCmd.Parameters.Add("@LeaveTypeID", SqlDbType.Int).Value = LeaveTypeID;
+                        objCmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID;
+                        #endregion Prepare Command
+
+                        #region Read Data and Set Controls
+                        LeaveENT entLeave = new LeaveENT();
+                        using (SqlDataReader objSDR = objCmd.ExecuteReader())
+                        {
+                            while (objSDR.Read())
+                            {
+                                if (!objSDR["TotalDays"].Equals(DBNull.Value))
+                                    entLeave.TotalDays = Convert.ToInt32(objSDR["TotalDays"]);
+                            }
+                        }
+                        return entLeave;
+                        #endregion Read Data and Set Controls
+                    }
+                    catch (SqlException ex)
+                    {
+                        Message = ex.Message;
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        Message = ex.Message;
+                        return null;
+                    }
+                    finally
+                    {
+                        if (objConn.State == ConnectionState.Open)
+                            objConn.Close();
+                    }
+                }
+
+            }
+        }
+        #endregion SelectTotalDaysByLeaveTypeIDUserID
 
         #endregion Select Operation
     }

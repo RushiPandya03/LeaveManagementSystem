@@ -174,6 +174,14 @@ namespace LeaveManagementSystem.BAL
             return dalLeave.SelectLeaveStatusByPK(LeaveID);
         }
         #endregion SelectLeaveStatusByPK Operation
+        
+        #region SelectLeaveStatusByPK Operation
+        public LeaveENT SelectTotalDaysByLeaveTypeIDUserID(SqlInt32 LeaveTypeID, SqlInt32 UserID)
+        {
+            LeaveDAL dalLeave = new LeaveDAL();
+            return dalLeave.SelectTotalDaysByLeaveTypeIDUserID(LeaveTypeID, UserID);
+        }
+        #endregion SelectLeaveStatusByPK Operation
 
         #endregion Select Operation
     }

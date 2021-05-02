@@ -1,4 +1,5 @@
 ﻿using LeaveManagementSystem.BAL;
+using LeaveManagementSystem.ENT;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -70,6 +71,8 @@ public partial class Content_Registration : System.Web.UI.Page
     {
         #region Collect Data
         UserENT entUser = new UserENT();
+        LeaveTypeENT entLeaveType = new LeaveTypeENT();
+        DesignationENT entDesignation = new DesignationENT();
 
         if (ddlDepartment.SelectedIndex > 0)
             entUser.DepartmentID = Convert.ToInt32(ddlDepartment.SelectedValue);
@@ -78,7 +81,10 @@ public partial class Content_Registration : System.Web.UI.Page
             entUser.InstituteID = Convert.ToInt32(ddlInstitute.SelectedValue);
 
         if (ddlDesignation.SelectedIndex > 0)
+        {
             entUser.DesignationID = Convert.ToInt32(ddlDesignation.SelectedValue);
+            entDesignation.DesignationID = Convert.ToInt32(ddlDesignation.SelectedValue);
+        }
 
         if (rbFemale.Checked != false)
             entUser.Gender = rbFemale.Text.Trim();
@@ -130,15 +136,46 @@ public partial class Content_Registration : System.Web.UI.Page
             fuStaffPhoto.SaveAs(strPhysicalPath);
             entUser.PhotoPath = strFileLocationSave;
         }
-
         #endregion Collect Data
 
         UserBAL balUser = new UserBAL();
+        LeaveTypeBAL balLeaveType = new LeaveTypeBAL();
+        DesignationBAL balDesignation = new DesignationBAL();
+
+        entDesignation = balDesignation.SelectByPK(entDesignation.DesignationID);
 
         if (Session["UserID"] == null)
         {
-            if (balUser.Insert(entUser))
+            if(entDesignation.DesignationName == "HOD")
             {
+                balUser.Insert(entUser);
+
+                clearSelection();
+                lblSuccess.Text = "Data Inserted Successfully";
+            }
+            else if(entDesignation.DesignationName != "HOD")
+            {
+                balUser.Insert(entUser);
+
+                if (entUser.UserID > 0)
+                    entLeaveType.UserID = entUser.UserID;
+
+                entLeaveType.LeaveType = "Casual Leave";
+                entLeaveType.TotalDays = 25;
+                balLeaveType.Insert(entLeaveType);
+
+                entLeaveType.LeaveType = "Medical Leave";
+                entLeaveType.TotalDays = 15;
+                balLeaveType.Insert(entLeaveType);
+
+                entLeaveType.LeaveType = "LOP";
+                entLeaveType.TotalDays = 10;
+                balLeaveType.Insert(entLeaveType);
+
+                entLeaveType.LeaveType = "Other Leave";
+                entLeaveType.TotalDays = 5;
+                balLeaveType.Insert(entLeaveType);
+
                 clearSelection();
                 lblSuccess.Text = "Data Inserted Successfully";
             }

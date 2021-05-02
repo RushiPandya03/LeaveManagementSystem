@@ -69,10 +69,10 @@ public class CommonFillMethods
     #endregion Dropdown Institute
 
     #region Dropdown LeaveType
-    public static void fillDropDownListLeaveType(DropDownList ddl)
+    public static void fillDropDownListLeaveType(DropDownList ddl,SqlInt32 UserID)
     {
         LeaveTypeBAL balLeaveType = new LeaveTypeBAL();
-        ddl.DataSource = balLeaveType.SelectForDropDownList();
+        ddl.DataSource = balLeaveType.SelectForDropDownListByUserID(UserID);
         ddl.DataValueField = "LeaveTypeID";
         ddl.DataTextField = "LeaveType";
         ddl.DataBind();

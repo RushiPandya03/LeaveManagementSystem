@@ -69,7 +69,7 @@
 
                 <div class="col-md-2 col-form-label"><b>Leave Type</b><span class="text-danger">*</span></div>
                 <div class="col-md-4">
-                    <asp:DropDownList ID="ddlLeaveType" runat="server" CssClass="form-control" AutoPostBack="True"></asp:DropDownList>
+                    <asp:DropDownList ID="ddlLeaveType" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlLeaveType_SelectedIndexChanged"></asp:DropDownList>
                     <asp:RequiredFieldValidator ID="rfvLeaveType" runat="server"
                         ErrorMessage="Enter LeaveType"
                         CssClass="text-danger"
@@ -81,7 +81,7 @@
             <div class="form-group row ml-1">
                 <div id="lblLeaveDuration" class="col-md-2 col-form-label"><b>Leave Duration</b><span class="text-danger">*</span></div>
                 <div class="col-md-4 col-form-label">
-                    <asp:RadioButton ID="rbFullLeave" runat="server" Checked="True" Text="FullLeave" GroupName="LeaveDuration" OnCheckedChanged="rbFullLeave_CheckedChanged" AutoPostBack="True" />
+                    <asp:RadioButton ID="rbFullLeave" runat="server" Text="FullLeave" GroupName="LeaveDuration" OnCheckedChanged="rbFullLeave_CheckedChanged" AutoPostBack="True" />
                     <asp:RadioButton ID="rbHalfLeave" runat="server" GroupName="LeaveDuration" Text="HalfLeave" OnCheckedChanged="rbHalfLeave_CheckedChanged" AutoPostBack="True" />
                 </div>
             </div>

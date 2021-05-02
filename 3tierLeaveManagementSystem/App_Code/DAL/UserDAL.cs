@@ -53,7 +53,8 @@ namespace LeaveManagementSystem.DAL
                         #region Prepare Command
                         objCmd.CommandType = CommandType.StoredProcedure;
                         objCmd.CommandText = "PR_User_Insert";
-                        
+
+                        objCmd.Parameters.Add("@UserID", SqlDbType.Int, 4).Direction = ParameterDirection.Output;
                         objCmd.Parameters.Add("@UserName", SqlDbType.VarChar).Value = entUser.UserName;
                         objCmd.Parameters.Add("@Password", SqlDbType.VarChar).Value = entUser.Password;
                         objCmd.Parameters.Add("@DisplayName", SqlDbType.VarChar).Value = entUser.DisplayName;
@@ -71,6 +72,8 @@ namespace LeaveManagementSystem.DAL
                         #endregion Prepare Command
 
                         objCmd.ExecuteNonQuery();
+                        if (objCmd.Parameters["@UserID"] != null)
+                            entUser.UserID = Convert.ToInt32(objCmd.Parameters["@UserID"].Value);
                         return true;
                     }
                     catch (SqlException ex)

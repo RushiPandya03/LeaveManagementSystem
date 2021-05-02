@@ -38,6 +38,19 @@
                 </asp:RequiredFieldValidator>
             </div>
         </div>
+            <div class="form-group row ml-1">
+            <label class="col-md-2 col-form-label"><b>Total Days</b><span class="text-danger">*</span></label>
+            <div class="col-md-4">
+                <asp:TextBox ID="txtTotalDays" CssClass="form-control" runat="server" TextMode="Number"></asp:TextBox>
+                <asp:RequiredFieldValidator ID="rfvTotalDays" runat="server" 
+                    ErrorMessage="Enter TotalDays" 
+                    ControlToValidate="txtTotalDays" 
+                    ValidationGroup="Save" Display="Dynamic" 
+                    SetFocusOnError="True"
+                    CssClass="text-danger">
+                </asp:RequiredFieldValidator>
+            </div>
+        </div>
         <div class="form-group row ml-1">
             <div class="col-md-2 offset-md-2">
                 <asp:Button ID="btnSave" runat="server" Text="Save" ValidationGroup="Save" CssClass="btn bg-gradient-primary" OnClick="btnSave_Click"/>
