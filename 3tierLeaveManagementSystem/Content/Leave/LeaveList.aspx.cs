@@ -115,6 +115,7 @@ public partial class Content_Leave_LeaveList : System.Web.UI.Page
     {
         LeaveBAL balLeave = new LeaveBAL();
         LeaveENT entLeave = new LeaveENT();
+        LeaveENT entLeaveforRemainingLeave = new LeaveENT();
         LeaveStatusBAL balLeaveStatus = new LeaveStatusBAL();
         LeaveTypeENT entLeaveType = new LeaveTypeENT();
         LeaveTypeBAL balLeaveType = new LeaveTypeBAL();
@@ -125,8 +126,10 @@ public partial class Content_Leave_LeaveList : System.Web.UI.Page
         {
             if (e.CommandArgument != null)
             {
+                entLeaveforRemainingLeave = balLeave.SelectByPK(Convert.ToInt32(e.CommandArgument.ToString().Trim()), Convert.ToInt32(Session["UserID"].ToString()));
                 if (balLeaveStatus.Delete(Convert.ToInt32(e.CommandArgument.ToString().Trim())))
                 {
+
                     if (!balLeave.Delete(Convert.ToInt32(e.CommandArgument.ToString().Trim()), Convert.ToInt32(Session["UserID"].ToString().Trim())))
                         lblErrorMesseage.Text = balLeave.Message;
 
@@ -140,22 +143,53 @@ public partial class Content_Leave_LeaveList : System.Web.UI.Page
                 }
                 if(entLeave.LeaveResponseBy == "Pending" && entLeave.LeaveStatus == "Pending")
                 {
-                    entLeaveType = balLeaveType.SelectByPK(entLeave.LeaveTypeID);
-                    if (entLeaveType.LeaveType == "Casual Leave")
+                    if (entLeaveforRemainingLeave.LeaveEndDate != "")
                     {
-                        entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
+                        string strStartDate = entLeaveforRemainingLeave.LeaveStartDate.ToString();
+                        string[] StartDateString = strStartDate.Split('-');
+                        DateTime startdate = Convert.ToDateTime(StartDateString[0] + "-" + StartDateString[1] + "-" + StartDateString[2]);
+
+                        string strEndDate = entLeaveforRemainingLeave.LeaveEndDate.ToString();
+                        string[] EndDateString = strEndDate.Split('-');
+                        DateTime enddate = Convert.ToDateTime(EndDateString[0] + "-" + EndDateString[1] + "-" + EndDateString[2]);
+
+                        entLeaveType = balLeaveType.SelectByPK(entLeave.LeaveTypeID);
+                        if (entLeaveType.LeaveType == "Casual Leave")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + Convert.ToInt32((enddate - startdate).TotalDays) + 1;
+                        }
+                        else if (entLeaveType.LeaveType == "Medical Leave")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + Convert.ToInt32((enddate - startdate).TotalDays) + 1;
+                        }
+                        else if (entLeaveType.LeaveType == "LOP")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + Convert.ToInt32((enddate - startdate).TotalDays) + 1;
+                        }
+                        else if (entLeaveType.LeaveType == "Other Leave")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + Convert.ToInt32((enddate - startdate).TotalDays) + 1;
+                        }
                     }
-                    else if (entLeaveType.LeaveType == "Medical Leave")
+                    else
                     {
-                        entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
-                    }
-                    else if (entLeaveType.LeaveType == "LOP")
-                    {
-                        entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
-                    }
-                    else if (entLeaveType.LeaveType == "Other Leave")
-                    {
-                        entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
+                        entLeaveType = balLeaveType.SelectByPK(entLeave.LeaveTypeID);
+                        if (entLeaveType.LeaveType == "Casual Leave")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
+                        }
+                        else if (entLeaveType.LeaveType == "Medical Leave")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
+                        }
+                        else if (entLeaveType.LeaveType == "LOP")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
+                        }
+                        else if (entLeaveType.LeaveType == "Other Leave")
+                        {
+                            entLeaveType.TotalDays = entLeaveType.TotalDays + 1;
+                        }
                     }
                     entLeaveType.UserID = Convert.ToInt32(Session["UserID"].ToString().Trim());
                     if (balLeaveType.UpdateTotalDaysByLeaveType(entLeaveType))

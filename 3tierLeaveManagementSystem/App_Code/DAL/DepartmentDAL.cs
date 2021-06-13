@@ -197,12 +197,12 @@ namespace LeaveManagementSystem.DAL
                     }
                     catch (SqlException ex)
                     {
-                        Message = ex.InnerException.Message;
+                        Message = ex.Message;
                         return null;
                     }
                     catch (Exception ex)
                     {
-                        Message = ex.InnerException.Message;
+                        Message = ex.Message;
                         return null;
                     }
                     finally
