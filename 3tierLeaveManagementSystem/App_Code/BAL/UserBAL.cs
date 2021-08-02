@@ -112,6 +112,16 @@ namespace LeaveManagementSystem.BAL
 
         #endregion SelectUserCount Operation
 
+        #region SelectUserEmail 
+
+        public DataTable SelectUserEmail()
+        {
+            UserDAL dalUser = new UserDAL();
+            return dalUser.SelectUserEmail();
+        }
+
+        #endregion SelectUserEmail 
+
         #region SelectForDropDownList Operation
         public DataTable SelectForDropDownList()
         {
@@ -119,6 +129,14 @@ namespace LeaveManagementSystem.BAL
             return dalUser.SelectForDropDownList();
         }
         #endregion SelectForDropDownList Operation
+
+        #region SelectUserNamePasswordByEmail Operation
+        public UserENT SelectUserNamePasswordByEmail(SqlString Email)
+        {
+            UserDAL dalUser = new UserDAL();
+            return dalUser.SelectUserNamePasswordByEmail(Email);
+        }
+        #endregion SelectUserNamePasswordByEmail Operation
 
         #region SelectByPK Operation
         public UserENT SelectByPK(SqlInt32 UserID)

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -16,7 +18,6 @@ public partial class Content_Registration : System.Web.UI.Page
     {
         if (!Page.IsPostBack)
         {
-            UserENT entUser = new UserENT();
             fillDropdownList();
             if (Session["UserID"] != null )
             {
@@ -149,6 +150,7 @@ public partial class Content_Registration : System.Web.UI.Page
             if(entDesignation.DesignationName == "HOD")
             {
                 balUser.Insert(entUser);
+                entUser = balUser.SelectByPK(entUser.UserID); 
 
                 clearSelection();
                 lblSuccess.Text = "Data Inserted Successfully";
@@ -158,7 +160,15 @@ public partial class Content_Registration : System.Web.UI.Page
                 balUser.Insert(entUser);
 
                 if (entUser.UserID > 0)
+                {
                     entLeaveType.UserID = entUser.UserID;
+                    entUser = balUser.SelectByPK(entUser.UserID);
+                }
+                else
+                {
+                    lblErrorMessage.Text = "empty";
+                    return;
+                }
 
                 entLeaveType.LeaveType = "Casual Leave";
                 entLeaveType.TotalDays = 25;
@@ -182,6 +192,24 @@ public partial class Content_Registration : System.Web.UI.Page
             else
             {
                 lblErrorMessage.Text = balUser.Message;
+            }
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("xyz@gmail.com");
+                mail.To.Add(entUser.Email.ToString());
+                mail.Subject = "User Created Successfully !!";
+                mail.Body = "<h3>You can now login into Leave management system</h3><br>" +
+                    "Your Username Is :- " + Convert.ToString(entUser.UserName) +
+                    "<br>Your Password Is :- " + Convert.ToString(entUser.Password) +
+                    "<br><br><i>Please don't reply, this is auto generated email</i>";
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential("xyz@gmail.com", "password");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
             }
         }
         else

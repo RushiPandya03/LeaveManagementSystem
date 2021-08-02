@@ -13,7 +13,7 @@ public partial class Content_Home_Home_After_Login : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         #region Check Valid User
-        if (Session["UserID"] == null)
+        if (Session["UserID"] == null || Session["Select"].ToString() == "Employee")
         {
             Response.Redirect("~/Content/Login.aspx");
             return;
@@ -38,6 +38,7 @@ public partial class Content_Home_Home_After_Login : System.Web.UI.Page
     protected void lbLogOut_Click(object sender, EventArgs e)
     {
         Session["UserID"] = null;
+        Session["Select"] = null;
         Response.Redirect("~/Content/Login.aspx");
     }
     #endregion Button: Logout

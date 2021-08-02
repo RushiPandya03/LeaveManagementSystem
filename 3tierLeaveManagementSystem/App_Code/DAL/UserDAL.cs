@@ -299,6 +299,52 @@ namespace LeaveManagementSystem.DAL
         }
         #endregion SelectUserCount
 
+        #region SelectUserEmail
+        public DataTable SelectUserEmail()
+        {
+            using (SqlConnection objConn = new SqlConnection(ConnectionString))
+            {
+                objConn.Open();
+                using (SqlCommand objCmd = objConn.CreateCommand())
+                {
+                    try
+                    {
+                        #region Prepare Command
+                        objCmd.CommandType = CommandType.StoredProcedure;
+                        objCmd.CommandText = "PR_User_SelectAllEmail";
+                        #endregion Prepare Command
+
+                        #region Read Data and Set Controls
+                        DataTable dt = new DataTable();
+                        using (SqlDataReader objSDR = objCmd.ExecuteReader())
+                        {
+                            dt.Load(objSDR);
+                        }
+                        return dt;
+
+                        #endregion Read Data and Set Controls
+                    }
+                    catch (SqlException ex)
+                    {
+                        Message = ex.Message;
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        Message = ex.Message;
+                        return null;
+                    }
+                    finally
+                    {
+                        if (objConn.State == ConnectionState.Open)
+                            objConn.Close();
+                    }
+                }
+
+            }
+        }
+        #endregion SelectUserEmail
+
         #region SelectForDropDownList
         public DataTable SelectForDropDownList()
         {
@@ -419,6 +465,66 @@ namespace LeaveManagementSystem.DAL
 
                                     if (!objSDR["PhotoPath"].Equals(DBNull.Value))
                                         entUser.PhotoPath = Convert.ToString(objSDR["PhotoPath"]);
+                                }
+                                return entUser;
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        }
+                        #endregion Read Data and Set Controls
+                    }
+                    catch (SqlException ex)
+                    {
+                        Message = ex.Message;
+                        return null;
+                    }
+                    catch (Exception ex)
+                    {
+                        Message = ex.Message;
+                        return null;
+                    }
+                    finally
+                    {
+                        if (objConn.State == ConnectionState.Open)
+                            objConn.Close();
+                    }
+                }
+
+            }
+        }
+        #endregion SelectByPK
+
+        #region SelectUserNamePasswordByEmail
+        public UserENT SelectUserNamePasswordByEmail(SqlString Email)
+        {
+            using (SqlConnection objConn = new SqlConnection(ConnectionString))
+            {
+                objConn.Open();
+                using (SqlCommand objCmd = objConn.CreateCommand())
+                {
+                    try
+                    {
+                        #region Prepare Command
+                        objCmd.CommandType = CommandType.StoredProcedure;
+                        objCmd.CommandText = "PR_User_SelectUserNamePasswordByEmail";
+                        objCmd.Parameters.Add("@Email", SqlDbType.VarChar).Value = Email;
+                        #endregion Prepare Command
+
+                        #region Read Data and Set Controls
+                        UserENT entUser = new UserENT();
+                        using (SqlDataReader objSDR = objCmd.ExecuteReader())
+                        {
+                            if (objSDR.HasRows)
+                            {
+                                while (objSDR.Read())
+                                {
+                                    if (!objSDR["UserName"].Equals(DBNull.Value))
+                                        entUser.UserName = Convert.ToString(objSDR["UserName"]);
+
+                                    if (!objSDR["Password"].Equals(DBNull.Value))
+                                        entUser.Password = Convert.ToString(objSDR["Password"]);
                                 }
                                 return entUser;
                             }

@@ -1,6 +1,7 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="Content_Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Forgetpassword.aspx.cs" Inherits="Content_Forgetpassword" %>
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <!-- Mirrored from colorlib.com/etc/lf/Login_v15/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Feb 2021 12:25:46 GMT -->
@@ -33,10 +34,10 @@
                     <div class="login100-form-title" style="background-image: url(assets/images/bg-01.jpg)">
                         <span class="login100-form-title-1">Leave Management System
                         </span>
-                        <span class="login100-form-title-1">Login
+                        <span class="login100-form-title-1">Forget Password
                         </span>
                     </div>
-                    <div class="container log-form">
+                    <div class="container log-form ">
                         <div class="shadow p-3 bg-white rounded">
                             <div class="row">
                                 <div class="col-md-12">
@@ -44,42 +45,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" style="padding-left: 4em">
-                            <div class="col-md-3 col-form-label">
-                                Username<span class="text-danger">*</span>
+                        <div class="row" style="padding-left:7em">
+                            <div class="col-md-2 col-form-label" >
+                                Email<span class="text-danger">*</span>
                             </div>
                             <div class="col-md-6">
-                                <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="rfvUsername" runat="server"
-                                    ControlToValidate="txtUserName"
-                                    ErrorMessage="Enter Username"
+                                <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="rfvEmail" runat="server"
+                                    ControlToValidate="txtEmail"
+                                    ErrorMessage="Enter Email"
                                     Display="Dynamic"
-                                    CssClass="text-danger" ValidationGroup="Login" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row" style="padding-left: 4em">
-                            <div class="col-md-3 col-form-label">
-                                Password<span class="text-danger">*</span>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="rfvPassword" runat="server"
-                                    ControlToValidate="txtPassword"
-                                    ErrorMessage="Enter Password"
-                                    Display="Dynamic"
-                                    CssClass="text-danger" ValidationGroup="Login" />
-
-                                <asp:LinkButton Style="font-size: 1.2em" ID="btnForgetpassword" runat="server" OnClick="btnForgetpassword_Click"><u>Forget Password?</u></asp:LinkButton>
+                                    CssClass="text-danger" ValidationGroup="Submit" />
                             </div>
                         </div>
                         <br />
                         <div class="row mb-4">
                             <div class="col-md-12 text-center">
-                                <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-info" OnClick="btnLogin_Click" ValidationGroup="Login" />
+                                <asp:Button ID="btnSubmit" runat="server" Text="Submit" CssClass="btn btn-sm btn-info" ValidationGroup="Submit" OnClick="btnSubmit_Click" />
+                                <asp:Button ID="btnCancel" runat="server" Text="Cancel" CssClass="btn btn-sm btn-danger" OnClick="btnCancel_Click" />
                             </div>
                         </div>
-                        <br />
                     </div>
                 </div>
             </div>

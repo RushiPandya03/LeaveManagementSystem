@@ -675,6 +675,8 @@ public partial class Content_Leave_LeaveAddEdit : System.Web.UI.Page
     #region Button: Logout
     protected void lbLogOut_Click(object sender, EventArgs e)
     {
+        Session["UserID"] = null;
+        Session["Select"] = null;
         Response.Redirect("~/Content/Login.aspx");
     }
     #endregion Button: Logout

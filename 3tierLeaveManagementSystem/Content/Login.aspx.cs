@@ -7,13 +7,21 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ASPSnippets.GoogleAPI;
+using System.Web.Script.Serialization;
 
 public partial class Content_Login : System.Web.UI.Page
 {
     #region Load Page
     protected void Page_Load(object sender, EventArgs e)
     {
-        
+        if (Session["UserID"] != null)
+        {
+            if (Session["Select"].ToString() == "HOD")
+                Response.Redirect("~/Content/Home/HOD_Home.aspx");
+            else if (Session["Select"].ToString() == "Employee")
+                Response.Redirect("~/Content/Home/Employee_Home.aspx");
+        }
     }
     #endregion Load Page
 
@@ -56,8 +64,8 @@ public partial class Content_Login : System.Web.UI.Page
         if (txtPassword.Text.Trim() != "")
             strPassword = txtPassword.Text.Trim();
         #endregion
-        
-        if(strUserName == "admin" && strPassword == "admin")
+
+        if (strUserName == "admin" && strPassword == "admin")
         {
             Session["Select"] = "Admin";
             Response.Redirect("~/Content/Institute/InstituteList.aspx");
@@ -65,8 +73,8 @@ public partial class Content_Login : System.Web.UI.Page
         }
 
         entUser = balUser.SelectByUserNamePassword(strUserName, strPassword);
-            
-        if (entUser!=null)
+
+        if (entUser != null)
         {
             if (!entUser.UserID.IsNull)
                 Session["UserID"] = entUser.UserID;
@@ -77,10 +85,12 @@ public partial class Content_Login : System.Web.UI.Page
 
             if (entUser.DesignationName == "HOD")
             {
+                Session["Select"] = "HOD";
                 Response.Redirect("~/Content/Home/HOD_Home.aspx");
             }
             else
             {
+                Session["Select"] = "Employee";
                 Response.Redirect("~/Content/Home/Employee_Home.aspx");
             }
         }
@@ -90,4 +100,11 @@ public partial class Content_Login : System.Web.UI.Page
         }
     }
     #endregion FillSession
+
+    #region Button: Forgetpassword
+    protected void btnForgetpassword_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("~/Content/Forgetpassword.aspx");
+    }
+    #endregion Button: Forgetpassword
 }
